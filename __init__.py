@@ -14,9 +14,6 @@ default_background_col = (255, 255, 255)
 black = (0, 0, 0)
 
 player = Cat(100, 100, 'black')
-player_img = pygame.image.load(os.path.join(player.img_src))
-player_img = pygame.transform.scale(player_img, (100,100))
-player_img.convert()
 
 def game_loop():
     game_exit = False
@@ -37,7 +34,11 @@ def game_loop():
                 player.jump()
             elif pressed[pygame.K_DOWN]:
                 player.knead()
-        update()
+            
+            if not pressed[pygame.K_DOWN]:
+                player.stop_knead()
+
+        update(count)
         draw()
 
         pygame.display.update()
@@ -47,11 +48,11 @@ def game_loop():
         else:
             count += 1
 
-def update():
-    player.update()
+def update(count):
+    player.update(count)
 
 def draw():
-    display.blit(player_img, (player.x, player.y))
+    display.blit(player.img, (player.x, player.y))
 
 if __name__ == '__main__':
     game_loop()
