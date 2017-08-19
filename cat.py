@@ -5,7 +5,7 @@ class Cat:
     def __init__(self, x, y, col):
         self.x, self.y, self.dx, self.dy = x, y, 0, 0
         self.width, self.height = 100, 100
-        self.img_src = "textures/cats/" + col + "_cat.png"
+        self.img_src = "textures/cats/" + col + "_cat.bmp"
     
     def update(self):
         if self.dx > 0:

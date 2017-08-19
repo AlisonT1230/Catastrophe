@@ -26,13 +26,13 @@ while not game_exit:
             game_exit = True
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_LEFT]:
-            bean.dx = -5
+            bean.dx = -10
         elif pressed[pygame.K_RIGHT]:
-            bean.dx = 5
+            bean.dx = 10
         else:
             bean.dx = 0
-        if pressed[pygame.K_UP]:
-            bean.dy = -15
+        if pressed[pygame.K_UP] and bean.y == settings.screen_height - bean.height:
+            bean.dy = -20
         
     bean.update()
     display.blit(bean_img, (bean.x, bean.y))
