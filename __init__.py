@@ -15,9 +15,13 @@ black = (0, 0, 0)
 
 player = Cat(100, 100, 'black')
 
+pygame.mixer.pre_init(44100, -16, 2, 4096)
+music = pygame.mixer.music.load("sounds/music/catastrophe.wav")
+
 def game_loop():
     game_exit = False
     count = 0
+    pygame.mixer.music.play(-1)
     while not game_exit:
         display.fill(default_background_col)
         for event in pygame.event.get():
