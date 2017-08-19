@@ -30,13 +30,15 @@ def game_loop():
                 game_exit = True
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_LEFT]:
-                player.dx = -10
+                player.move_left()
             elif pressed[pygame.K_RIGHT]:
-                player.dx = 10
+                player.move_right()
             else:
-                player.dx = 0
-            if pressed[pygame.K_UP] and player.y == settings.screen_height - player.height:
-                player.dy = -20
+                player.stop()
+            if pressed[pygame.K_UP]:
+                player.jump()
+            elif pressed[pygame.K_DOWN]:
+                player.knead()
         update()
         display.blit(player_img, (player.x, player.y))
 
