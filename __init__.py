@@ -1,6 +1,5 @@
 import pygame
 import settings
-import global_vars
 import os
 from cat import Cat
 import time
@@ -11,6 +10,9 @@ display = pygame.display.set_mode((settings.screen_width, settings.screen_height
 pygame.display.set_caption('Catastrophe')
 clock = pygame.time.Clock()
 
+default_background_col = (255, 255, 255)
+black = (0, 0, 0)
+
 player = Cat(100, 100, 'black')
 player_img = pygame.image.load(os.path.join(player.img_src))
 player_img = pygame.transform.scale(player_img, (100,100))
@@ -20,11 +22,12 @@ def update():
     player.update()
 
 def game_loop():
-    while not global_vars.game_exit:
-        display.fill(global_vars.default_background_col)
+    game_exit = False
+    while not game_exit:
+        display.fill(default_background_col)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                global_vars.game_exit = True
+                game_exit = True
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_LEFT]:
                 player.dx = -10
