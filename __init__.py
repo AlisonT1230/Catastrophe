@@ -18,11 +18,9 @@ player_img = pygame.image.load(os.path.join(player.img_src))
 player_img = pygame.transform.scale(player_img, (100,100))
 player_img.convert()
 
-def update():
-    player.update()
-
 def game_loop():
     game_exit = False
+    count = 0
     while not game_exit:
         display.fill(default_background_col)
         for event in pygame.event.get():
@@ -40,11 +38,20 @@ def game_loop():
             elif pressed[pygame.K_DOWN]:
                 player.knead()
         update()
-        display.blit(player_img, (player.x, player.y))
+        draw()
 
         pygame.display.update()
         clock.tick(60)
+        if count == 100:
+            count = 0
+        else:
+            count += 1
 
+def update():
+    player.update()
+
+def draw():
+    display.blit(player_img, (player.x, player.y))
 
 if __name__ == '__main__':
     game_loop()
