@@ -40,7 +40,8 @@ class Cat:
 
         self.img = self.i1       #   default image
 
-    def update(self, count):
+    def update(self, count, cursor_x, cursor_y):
+        self.__update_follow(cursor_x, cursor_y)
         self.__update_position()
         self.__update_img(count)
 
@@ -102,3 +103,14 @@ class Cat:
                 self.img = self.w1
             else:
                 self.img = self.w2
+
+
+    def __update_follow(self, cursor_x, cursor_y):
+        if self.x < cursor_x - 100:
+            self.move_right()
+        elif self.x > cursor_x:
+            self.move_left()
+        else:
+            self.stop()
+            if self.y > cursor_y + 200:
+                self.jump()

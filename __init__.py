@@ -27,22 +27,25 @@ def game_loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_exit = True
-            pressed = pygame.key.get_pressed()
-            if pressed[pygame.K_LEFT]:
-                player.move_left()
-            elif pressed[pygame.K_RIGHT]:
-                player.move_right()
-            else:
-                player.stop()
-            if pressed[pygame.K_UP]:
-                player.jump()
-            elif pressed[pygame.K_DOWN]:
-                player.knead()
-            
-            if not pressed[pygame.K_DOWN]:
-                player.stop_knead()
-
-        update(count)
+            #pressed = pygame.key.get_pressed()
+            #if pressed[pygame.K_LEFT]:
+            #    player.move_left()
+            #elif pressed[pygame.K_RIGHT]:
+            #    player.move_right()
+            #else:
+            #    player.stop()
+            #if pressed[pygame.K_UP]:
+            #    player.jump()
+            #elif pressed[pygame.K_DOWN]:
+            #    player.knead()
+            #
+            #if not pressed[pygame.K_DOWN]:
+            #    player.stop_knead()
+        
+        cursor_x = pygame.mouse.get_pos()[0]
+        cursor_y = pygame.mouse.get_pos()[1]
+        
+        update(count, cursor_x, cursor_y)
         draw()
 
         pygame.display.update()
@@ -52,8 +55,8 @@ def game_loop():
         else:
             count += 1
 
-def update(count):
-    player.update(count)
+def update(count, cursor_x, cursor_y):
+    player.update(count, cursor_x, cursor_y)
 
 def draw():
     display.blit(player.img, (player.x, player.y))
