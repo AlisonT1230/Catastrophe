@@ -5,12 +5,16 @@ import os
 from tangible import Tangible
 
 MAX_KNEAD = 100
+MAX_HEALTH = 100
+MAX_LIVES = 5
 
 class Cat(Tangible):
 
     def __init__(self, x, y, col):
         super(Cat, self).__init__(x, y, 100, 100)
         self.dx, self.dy = 0, 0
+        self.health = 100
+        self.lives = 5
         self.knead_power = 0
         self.kneading = False
         self.on_blanket = False
@@ -75,6 +79,34 @@ class Cat(Tangible):
 
     def stop_knead(self):
         self.kneading = False
+
+
+    def add_health(self, amt):
+        if self.health + amt < MAX_HEALTH:
+            self.health += amt
+        else:
+            self.health = MAX_HEALTH
+
+
+    def drop_health(self, amt):
+        if self.health - amt > 0:
+            self.health -= amt
+        else:
+            self.health = 0
+            self.drop_life()
+
+    
+    def add_life(self):
+        if self.lives < MAX_LIVES:
+            self.lives += 1
+
+
+    def drop_life(self):
+        if self.lives > 0:
+            self.lives -= 1
+        else:
+            pass
+            #   GAME OVER
 
 
     def __update_position(self):
