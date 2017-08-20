@@ -3,6 +3,7 @@ import settings
 import os
 from cat import Cat
 from blanket import Blanket
+from hud import HUD, HUD_COLOUR
 import time
 
 pygame.init()
@@ -15,8 +16,8 @@ default_background_col = (255, 255, 255)
 black = (0, 0, 0)
 
 player = Cat(100, 100, 'black')
-
 blanket = Blanket(300, 575)
+hud = HUD()
 
 pygame.mixer.pre_init(44100, -16, 2, 4096)
 music = pygame.mixer.music.load("sounds/music/catastrophe.wav")
@@ -59,12 +60,16 @@ def game_loop():
 def update(count):
     player.update(count)
     player.update_blanket_val(blanket)
+    hud.update(player.health, player.knead_power)
 
 
 def draw():
     display.blit(player.img, (player.x, player.y))
     display.blit(blanket.green_img, (blanket.x, blanket.y))
-
+    display.blit(hud.health_txt, (25, 25))
+    display.blit(hud.knead_txt, (25, 45))
+    pygame.draw.rect(display, HUD_COLOUR, hud.health_rect)
+    pygame.draw.rect(display, HUD_COLOUR, hud.knead_rect)
 
 if __name__ == '__main__':
     game_loop()

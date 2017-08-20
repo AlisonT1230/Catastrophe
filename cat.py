@@ -52,6 +52,7 @@ class Cat(Tangible):
     def update(self, count):
         self.__update_position()
         self.__update_img(count)
+        self.__update_knead_val()
 
 
     def move_left(self):
@@ -73,7 +74,6 @@ class Cat(Tangible):
 
     def knead(self):
         if self.knead_power < MAX_KNEAD and self.y == self.ground_height and self.on_blanket:
-            self.knead_power += 1
             self.kneading = True
         
 
@@ -139,6 +139,14 @@ class Cat(Tangible):
         else:
             self.on_blanket = False
             self.ground_height = settings.screen_height - self.height
+
+
+    def __update_knead_val(self):
+        if self.kneading:
+            if self.knead_power < MAX_KNEAD:
+                self.knead_power += 0.5
+            else:
+                self.stop_knead()
 
 
     def __update_img(self, count):
