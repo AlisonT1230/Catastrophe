@@ -2,13 +2,15 @@ import settings
 import pygame
 import os
 
+from tangible import Tangible
+
 MAX_KNEAD = 100
 
-class Cat:
+class Cat(Tangible):
 
     def __init__(self, x, y, col):
-        self.x, self.y, self.dx, self.dy = x, y, 0, 0
-        self.width, self.height = 100, 100
+        super(Cat, self).__init__(x, y, 100, 100)
+        self.dx, self.dy = 0, 0
         self.knead_power = 0
         self.kneading = False
 
