@@ -13,31 +13,33 @@ class Cat(Tangible):
         self.dx, self.dy = 0, 0
         self.knead_power = 0
         self.kneading = False
+        self.on_blanket = False
+        self.ground_height = settings.screen_height - self.height
 
         #   Load all images
 
         self.i1 = pygame.image.load(os.path.join("textures/cats/black_cat_i1.bmp"))
-        self.i1 = pygame.transform.scale(self.i1, (100,100))
+        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
         self.i1.convert()
 
         self.i2 = pygame.image.load(os.path.join("textures/cats/black_cat_i2.bmp"))
-        self.i2 = pygame.transform.scale(self.i2, (100,100))
+        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
         self.i2.convert()
 
         self.w1 = pygame.image.load(os.path.join("textures/cats/black_cat_w1.bmp"))
-        self.w1 = pygame.transform.scale(self.w1, (100,100))
+        self.w1 = pygame.transform.scale(self.w1, (self.width, self.height))
         self.w1.convert()
 
         self.w2 = pygame.image.load(os.path.join("textures/cats/black_cat_w2.bmp"))
-        self.w2 = pygame.transform.scale(self.w2, (100,100))
+        self.w2 = pygame.transform.scale(self.w2, (self.width, self.height))
         self.w2.convert()
 
         self.k1 = pygame.image.load(os.path.join("textures/cats/black_cat_k1.bmp"))
-        self.k1 = pygame.transform.scale(self.k1, (100,100))
+        self.k1 = pygame.transform.scale(self.k1, (self.width, self.height))
         self.k1.convert()
 
         self.k2 = pygame.image.load(os.path.join("textures/cats/black_cat_k2.bmp"))
-        self.k2 = pygame.transform.scale(self.k2, (100,100))
+        self.k2 = pygame.transform.scale(self.k2, (self.width, self.height))
         self.k2.convert()
 
         self.img = self.i1       #   default image
@@ -61,12 +63,12 @@ class Cat(Tangible):
 
 
     def jump(self):
-        if self.y == settings.screen_height - self.height and not self.kneading:
+        if self.y == self.ground_height and not self.kneading:
             self.dy = -20
 
 
     def knead(self):
-        if self.knead_power < MAX_KNEAD and self.y == settings.screen_height - self.height:
+        if self.knead_power < MAX_KNEAD and self.y == self.ground_height and self.on_blanket:
             self.knead_power += 1
             self.kneading = True
         
@@ -88,15 +90,25 @@ class Cat(Tangible):
             else:
                 self.x = 0
         if self.dy > 0:
-            if self.y < settings.screen_height - self.height:
+            if self.y < self.ground_height:
                 self.y += self.dy
             else:
-                self.y = settings.screen_height - self.height
+                self.y = self.ground_height
         elif self.dy < 0:
             if self.y > 0:
                 self.y += self.dy
         self.dy += 1
     
+
+    def update_blanket_val(self, blanket):
+        if self.is_collide(blanket):
+            self.on_blanket = True
+            self.ground_height = blanket.y - self.height
+        else:
+            self.on_blanket = False
+            self.ground_height = settings.screen_height - self.height
+
+
     def __update_img(self, count):
         """
         Updates the image to the correct animation 

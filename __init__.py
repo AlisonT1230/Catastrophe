@@ -2,6 +2,7 @@ import pygame
 import settings
 import os
 from cat import Cat
+from blanket import Blanket
 import time
 
 pygame.init()
@@ -15,13 +16,15 @@ black = (0, 0, 0)
 
 player = Cat(100, 100, 'black')
 
+blanket = Blanket(300, 575)
+
 pygame.mixer.pre_init(44100, -16, 2, 4096)
 music = pygame.mixer.music.load("sounds/music/catastrophe.wav")
 
 def game_loop():
     game_exit = False
     count = 0
-    pygame.mixer.music.play(-1)
+    #pygame.mixer.music.play(-1)
     while not game_exit:
         display.fill(default_background_col)
         for event in pygame.event.get():
@@ -55,10 +58,12 @@ def game_loop():
 
 def update(count):
     player.update(count)
+    player.update_blanket_val(blanket)
 
 
 def draw():
     display.blit(player.img, (player.x, player.y))
+    display.blit(blanket.green_img, (blanket.x, blanket.y))
 
 
 if __name__ == '__main__':
