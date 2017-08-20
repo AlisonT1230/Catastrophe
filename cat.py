@@ -42,32 +42,41 @@ class Cat(Tangible):
 
         self.img = self.i1       #   default image
 
+
     def update(self, count):
         self.__update_position()
         self.__update_img(count)
 
+
     def move_left(self):
         self.dx = -10
+
 
     def move_right(self):
         self.dx = 10
 
+
     def stop(self):
         self.dx = 0
+
 
     def jump(self):
         if self.y == settings.screen_height - self.height and not self.kneading:
             self.dy = -20
+
 
     def knead(self):
         if self.knead_power < MAX_KNEAD and self.y == settings.screen_height - self.height:
             self.knead_power += 1
             self.kneading = True
         
+
     def stop_knead(self):
         self.kneading = False
 
+
     def __update_position(self):
+        """Updates the position according to velocity and boundaries."""
         if self.dx > 0 and not self.kneading:
             if self.x < settings.screen_width - self.width:
                 self.x += self.dx
@@ -89,6 +98,10 @@ class Cat(Tangible):
         self.dy += 1
     
     def __update_img(self, count):
+        """
+        Updates the image to the correct animation 
+        frame according to the count.
+        """
         if self.kneading:
             if count < 26 or (count > 50 and count < 76):
                 self.img = self.k1

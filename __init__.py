@@ -52,11 +52,14 @@ def game_loop():
         else:
             count += 1
 
+
 def update(count):
     player.update(count)
 
+
 def draw():
     display.blit(player.img, (player.x, player.y))
+
 
 if __name__ == '__main__':
     game_loop()
