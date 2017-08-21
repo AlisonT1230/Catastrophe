@@ -21,12 +21,13 @@ hud = HUD()
 
 #   Initalize sounds
 pygame.mixer.quit()
-pygame.mixer.init(44100, -16, 2, 4096)
+pygame.mixer.init(44100, -16, 2, 512)
 music = pygame.mixer.music.load(os.path.join("sounds/music/Catastrophe.wav"))
 #   https://freesound.org/people/soundmary/
-player.purr = pygame.mixer.Sound(os.path.join("sounds/sound_effects/purr.wav"))
+player.purr_sound = pygame.mixer.Sound(os.path.join("sounds/sound_effects/purr.wav"))
 #   https://freesound.org/people/Npeo/
-player.meow = pygame.mixer.Sound(os.path.join("sounds/sound_effects/meow.wav"))
+player.meow_sound = pygame.mixer.Sound(os.path.join("sounds/sound_effects/meow.wav"))
+player.jump_sound = pygame.mixer.Sound(os.path.join("sounds/sound_effects/jump.wav"))
 
 def game_loop():
     game_exit = False
