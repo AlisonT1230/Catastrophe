@@ -1,14 +1,16 @@
 import pygame
+from pygame.locals import FULLSCREEN
 import settings
 import os
 from cat import Cat
 from blanket import Blanket
+from ground import Ground
 from hud import HUD, HUD_COLOUR
 import time
 
 pygame.init()
 
-display = pygame.display.set_mode((settings.screen_width, settings.screen_height))
+display = pygame.display.set_mode((settings.screen_width, settings.screen_height), FULLSCREEN)
 pygame.display.set_caption('Catastrophe')
 clock = pygame.time.Clock()
 
@@ -16,13 +18,15 @@ default_background_col = (255, 255, 255)
 black = (0, 0, 0)
 
 player = Cat(100, 100, 'black')
-blanket = Blanket(300, 575)
 hud = HUD()
+blankets = [Blanket(300, 575), Blanket(200, 400), Blanket(400, 775)]
+ground_blocks = [Ground(0, 700), Ground(100, 700), Ground(200, 700)]
 
 #   Initalize sounds
 pygame.mixer.quit()
 pygame.mixer.init(44100, -16, 2, 512)
-music = pygame.mixer.music.load(os.path.join("sounds/music/Catastrophe.wav"))
+#pygame.mixer.music.load(os.path.join("sounds/music/Catastrophe.wav"))
+pygame.mixer.music.load(os.path.join("sounds/music/Jazzy Cat.wav"))
 #   https://freesound.org/people/soundmary/
 player.purr_sound = pygame.mixer.Sound(os.path.join("sounds/sound_effects/purr.wav"))
 #   https://freesound.org/people/Npeo/
@@ -39,6 +43,9 @@ def game_loop():
             if event.type == pygame.QUIT:
                 game_exit = True
             pressed = pygame.key.get_pressed()
+            if pressed[pygame.K_q]:
+                pygame.quit()   #   causes error, temporary fullscreen exit
+                quit()
             if pressed[pygame.K_LEFT]:
                 player.move_left()
             elif pressed[pygame.K_RIGHT]:
@@ -67,13 +74,20 @@ def game_loop():
 
 def update(count):
     player.update(count)
-    player.update_blanket_val(blanket)
+    player.update_blanket_val(blankets)
+    player.update_ground_val(ground_blocks)
     hud.update(player.health, player.knead_power)
 
 
 def draw():
     display.blit(player.img, (player.x, player.y))
-    display.blit(blanket.green_img, (blanket.x, blanket.y))
+
+    for g in ground_blocks:
+        display.blit(g.wood_planks, (g.x, g.y))
+
+    for b in blankets:
+        display.blit(b.green_img, (b.x, b.y))
+
     display.blit(hud.health_txt, (25, 25))
     display.blit(hud.knead_txt, (25, 45))
     pygame.draw.rect(display, HUD_COLOUR, hud.health_rect)

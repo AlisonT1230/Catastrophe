@@ -18,6 +18,7 @@ class Cat(Tangible):
         self.knead_power = 0
         self.kneading = False
         self.on_blanket = False
+        self.grounded = False
         self.ground_height = settings.screen_height - self.height
 
         #   Load all images
@@ -124,24 +125,45 @@ class Cat(Tangible):
                 self.x += self.dx
             else:
                 self.x = 0
-        if self.dy > 0:
+        if self.dy >= 0:
             if self.y < self.ground_height:
                 self.y += self.dy
+                self.dy += 1
             else:
                 self.y = self.ground_height
+                self.dy = 0
         elif self.dy < 0:
             if self.y > 0:
                 self.y += self.dy
-        self.dy += 1
+                self.dy += 1
+            else:
+                self.dy = 0
     
 
-    def update_blanket_val(self, blanket):
-        if self.is_collide(blanket):
-            self.on_blanket = True
-            self.ground_height = blanket.y - self.height
-        else:
-            self.on_blanket = False
-            self.ground_height = settings.screen_height - self.height
+    def update_blanket_val(self, blankets):
+        for b in blankets:
+            if self.is_collide(b) and self.y + self.height <  b.y + 50:
+                self.on_blanket = True
+                self.ground_height = b.y - self.height
+                self.grounded = True
+                break
+            else:
+                if self.grounded:
+                    self.grounded = False
+                    self.on_blanket = False
+                    self.ground_height = settings.screen_height - self.height
+
+    
+    def update_ground_val(self, ground_blocks):
+        for g in ground_blocks:
+            if self.is_collide(g) and self.y + self.height < g.y + 50:
+                self.ground_height = g.y - self.height
+                self.grounded = True
+                break
+            else:
+                if not self.grounded:
+                    self.ground_height = settings.screen_height - self.height
+                    self.grounded = False
 
 
     def __update_knead_val(self):
