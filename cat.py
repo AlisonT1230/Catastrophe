@@ -47,7 +47,7 @@ class Cat(Tangible):
         self.k2.convert()
 
         self.img = self.i1       #   default image
-
+        
 
     def update(self, count):
         self.__update_position()
@@ -75,10 +75,12 @@ class Cat(Tangible):
     def knead(self):
         if self.knead_power < MAX_KNEAD and self.y == self.ground_height and self.on_blanket:
             self.kneading = True
+            self.purr.play(-1)
         
 
     def stop_knead(self):
         self.kneading = False
+        self.purr.fadeout(1000)
 
 
     def add_health(self, amt):

@@ -19,13 +19,19 @@ player = Cat(100, 100, 'black')
 blanket = Blanket(300, 575)
 hud = HUD()
 
-pygame.mixer.pre_init(44100, -16, 2, 4096)
-music = pygame.mixer.music.load("sounds/music/catastrophe.wav")
+#   Initalize sounds
+pygame.mixer.quit()
+pygame.mixer.init(44100, -16, 2, 4096)
+music = pygame.mixer.music.load(os.path.join("sounds/music/Catastrophe.wav"))
+#   https://freesound.org/people/soundmary/
+player.purr = pygame.mixer.Sound(os.path.join("sounds/sound_effects/purr.wav"))
+#   https://freesound.org/people/Npeo/
+player.meow = pygame.mixer.Sound(os.path.join("sounds/sound_effects/meow.wav"))
 
 def game_loop():
     game_exit = False
     count = 0
-    #pygame.mixer.music.play(-1)
+    pygame.mixer.music.play(-1)
     while not game_exit:
         display.fill(default_background_col)
         for event in pygame.event.get():
@@ -41,7 +47,8 @@ def game_loop():
             if pressed[pygame.K_UP]:
                 player.jump()
             elif pressed[pygame.K_DOWN]:
-                player.knead()
+                if not player.kneading:
+                    player.knead()
             
             if not pressed[pygame.K_DOWN]:
                 player.stop_knead()
