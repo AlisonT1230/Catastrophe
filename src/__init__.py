@@ -22,7 +22,15 @@ player = Cat(100, 100, 'black')
 hud = HUD()
 blankets = [Blanket(300, 575), Blanket(200, 400)]
 ground_manager = GroundManager()
-ground_manager.ground_blocks = [Ground(0, 700, 'wood_planks'), Ground(100, 700, 'wood_planks'), Ground(200, 700, 'wood_planks'), Ground(300, 700, 'stone')]
+#ground_manager.ground_blocks = [Ground(0, 700, 'wood_planks'), Ground(100, 700, 'wood_planks'), Ground(200, 700, 'wood_planks'), Ground(300, 700, 'stone')]
+
+camera_offset = (0, 0)  #   offset of bottom left corner of map
+map_0_txt = open("../maps/map_0.txt", "r")
+for line in map_0_txt:
+    pars = line.split()
+    ground_manager.ground_blocks.append(Ground(int(pars[1]), int(pars[2]), pars[0]))
+
+map_0_txt.close()
 
 #   Initalize sounds
 pygame.mixer.quit()
@@ -82,10 +90,10 @@ def update(count):
 
 
 def draw():
-    display.blit(player.img, (player.x, player.y))
+    display.blit(player.img, (player.x - camera_offset[0], player.y - camera_offset[1]))
 
     for g in ground_manager.ground_blocks:
-        display.blit(g.wood_planks, (g.x, g.y))
+        display.blit(g.wood_planks, (g.x - camera_offset[0], g.y - camera_offset[1]))
 
     for b in blankets:
         display.blit(b.green_img, (b.x, b.y))
