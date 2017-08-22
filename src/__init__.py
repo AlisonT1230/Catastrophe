@@ -5,6 +5,7 @@ import os
 from cat import Cat
 from blanket import Blanket
 from ground import Ground
+from ground_manager import GroundManager
 from hud import HUD, HUD_COLOUR
 import time
 
@@ -19,8 +20,9 @@ black = (0, 0, 0)
 
 player = Cat(100, 100, 'black')
 hud = HUD()
-blankets = [Blanket(300, 575), Blanket(200, 400), Blanket(400, 775)]
-ground_blocks = [Ground(0, 700), Ground(100, 700), Ground(200, 700)]
+blankets = [Blanket(300, 575), Blanket(200, 400)]
+ground_manager = GroundManager()
+ground_manager.ground_blocks = [Ground(0, 700, 'wood_planks'), Ground(100, 700, 'wood_planks'), Ground(200, 700, 'wood_planks'), Ground(300, 700, 'stone')]
 
 #   Initalize sounds
 pygame.mixer.quit()
@@ -75,14 +77,14 @@ def game_loop():
 def update(count):
     player.update(count)
     player.update_blanket_val(blankets)
-    player.update_ground_val(ground_blocks)
+    player.update_ground_val(ground_manager.ground_blocks)
     hud.update(player.health, player.knead_power)
 
 
 def draw():
     display.blit(player.img, (player.x, player.y))
 
-    for g in ground_blocks:
+    for g in ground_manager.ground_blocks:
         display.blit(g.wood_planks, (g.x, g.y))
 
     for b in blankets:
