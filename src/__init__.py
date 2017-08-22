@@ -20,7 +20,7 @@ black = (0, 0, 0)
 
 player = Cat(100, 100, 'black')
 hud = HUD()
-blankets = [Blanket(300, 575), Blanket(200, 400)]
+blankets = [Blanket(300, 575), Blanket(200, 400), Blanket(750, 575)]
 ground_manager = GroundManager()
 #ground_manager.ground_blocks = [Ground(0, 700, 'wood_planks'), Ground(100, 700, 'wood_planks'), Ground(200, 700, 'wood_planks'), Ground(300, 700, 'stone')]
 

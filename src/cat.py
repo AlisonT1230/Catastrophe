@@ -138,6 +138,8 @@ class Cat(Tangible):
                 self.dy += 1
             else:
                 self.dy = 0
+        if self.dy >= 25:
+            self.dy = 25
     
 
     def update_blanket_val(self, blankets):
@@ -156,10 +158,18 @@ class Cat(Tangible):
     
     def update_ground_val(self, ground_blocks):
         for g in ground_blocks:
-            if self.is_collide(g) and self.y + self.height < g.y + 50:
-                self.ground_height = g.y - self.height
-                self.grounded = True
-                break
+            if self.is_collide(g):
+                if self.y + self.height < g.y + 35:             #   cat bottom collided
+                    self.y = g.y - self.height
+                    self.ground_height = g.y - self.height
+                    self.grounded = True
+                    break
+                elif self.y > g.y + g.height - 35:              #   cat top collided
+                    self.y = g.y + g.height
+                elif self.x + self.width < g.x + 35:            #   cat right collided
+                    self.x = g.x - self.width
+                elif self.x > g.x + g.width - 35:                    #   cat left collided
+                    self.x = g.x + g.width
             else:
                 if not self.grounded:
                     self.ground_height = settings.screen_height - self.height
