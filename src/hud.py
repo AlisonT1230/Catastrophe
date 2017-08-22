@@ -13,7 +13,7 @@ class HUD:
         self.health_bar_width = 150
         self.knead_bar_width = 150
 
-        font = pygame.font.Font("fonts/BalooBhaijaan-Regular.ttf", 20)
+        font = pygame.font.Font("../fonts/BalooBhaijaan-Regular.ttf", 20)
         self.health_txt = font.render("Health", True, HUD_COLOUR)
         self.knead_txt = font.render("Knead", True, HUD_COLOUR)
         self.health_rect = pygame.Rect(HEALTH_BAR, (self.health_bar_width, BAR_THICKNESS))

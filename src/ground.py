@@ -9,7 +9,7 @@ class Ground(Tangible):
 
         #   Load images
 
-        self.wood_planks = pygame.image.load(os.path.join("textures/blocks/wood_planks.bmp"))
+        self.wood_planks = pygame.image.load(os.path.join("../textures/blocks/wood_planks.bmp"))
         self.wood_planks = pygame.transform.scale(self.wood_planks, (self.width, self.height))
         self.wood_planks.convert()
         

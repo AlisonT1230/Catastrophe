@@ -25,13 +25,13 @@ ground_blocks = [Ground(0, 700), Ground(100, 700), Ground(200, 700)]
 #   Initalize sounds
 pygame.mixer.quit()
 pygame.mixer.init(44100, -16, 2, 512)
-#pygame.mixer.music.load(os.path.join("sounds/music/Catastrophe.wav"))
-pygame.mixer.music.load(os.path.join("sounds/music/Jazzy Cat.wav"))
+#pygame.mixer.music.load(os.path.join("../sounds/music/Catastrophe.wav"))
+pygame.mixer.music.load(os.path.join("../sounds/music/Jazzy Cat.wav"))
 #   https://freesound.org/people/soundmary/
-player.purr_sound = pygame.mixer.Sound(os.path.join("sounds/sound_effects/purr.wav"))
+player.purr_sound = pygame.mixer.Sound(os.path.join("../sounds/sound_effects/purr.wav"))
 #   https://freesound.org/people/Npeo/
-player.meow_sound = pygame.mixer.Sound(os.path.join("sounds/sound_effects/meow.wav"))
-player.jump_sound = pygame.mixer.Sound(os.path.join("sounds/sound_effects/jump.wav"))
+player.meow_sound = pygame.mixer.Sound(os.path.join("../sounds/sound_effects/meow.wav"))
+player.jump_sound = pygame.mixer.Sound(os.path.join("../sounds/sound_effects/jump.wav"))
 
 def game_loop():
     game_exit = False
