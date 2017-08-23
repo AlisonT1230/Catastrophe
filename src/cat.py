@@ -161,11 +161,13 @@ class Cat(Tangible):
             if self.is_collide(g):
                 if self.y + self.height < g.y + 35:             #   cat bottom collided
                     self.y = g.y - self.height
+                    self.dy = 0
                     self.ground_height = g.y - self.height
                     self.grounded = True
                     break
                 elif self.y > g.y + g.height - 35:              #   cat top collided
                     self.y = g.y + g.height
+                    self.dy = 0
                 elif self.x + self.width < g.x + 35:            #   cat right collided
                     self.x = g.x - self.width
                 elif self.x > g.x + g.width - 35:                    #   cat left collided
