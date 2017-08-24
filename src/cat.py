@@ -7,6 +7,7 @@ from tangible import Tangible
 MAX_KNEAD = 100
 MAX_HEALTH = 100
 MAX_LIVES = 5
+TERMINAL_VELOCITY = 25
 
 class Cat(Tangible):
 
@@ -138,8 +139,8 @@ class Cat(Tangible):
                 self.dy += 1
             else:
                 self.dy = 0
-        if self.dy >= 25:
-            self.dy = 25
+        if self.dy >= TERMINAL_VELOCITY:
+            self.dy = TERMINAL_VELOCITY
     
 
     def update_blanket_val(self, blankets):
@@ -159,9 +160,8 @@ class Cat(Tangible):
     def update_ground_val(self, ground_blocks):
         for g in ground_blocks:
             if self.is_collide(g):
-                if self.y + self.height < g.y + 35:             #   cat bottom collided
+                if self.y + self.height < g.y + TERMINAL_VELOCITY:             #   cat bottom collided
                     self.y = g.y - self.height
-                    self.dy = 0
                     self.ground_height = g.y - self.height
                     self.grounded = True
                     break
