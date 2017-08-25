@@ -1,33 +1,4 @@
-stone 0 700
-stone 100 700
-stone 200 700
-stone 300 700
-stone 400 700
-stone 500 700
-stone 600 700
-stone 700 700
-stone 800 700
-stone 900 700
-stone 1000 700
-stone 1100 700
-stone 1200 700
-stone 1300 700
-stone 1400 700
-stone 1500 700
-stone 1600 700
-stone 1700 700
-stone 1800 700
-stone 1900 700
-stone 2000 700
-stone 2100 700
-stone 2200 700
-stone 2300 700
-stone 2400 700
-stone 2500 700
-stone 2600 700
-stone 2700 700
-stone 2800 700
-stone 2900 700
+stone 0 700 2900 1000
 wood_planks 500 500
 --
 700 400
