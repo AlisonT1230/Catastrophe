@@ -51,8 +51,8 @@ class Cat(Tangible):
         self.img = self.i1       #   default image
         
 
-    def update(self, count):
-        self.__update_position()
+    def update(self, count, boundary_x, boundary_y):
+        self.__update_position(boundary_x, boundary_y)
         self.__update_img(count)
         self.__update_knead_val()
 
@@ -114,13 +114,13 @@ class Cat(Tangible):
             #   GAME OVER
 
 
-    def __update_position(self):
+    def __update_position(self, boundary_x, boundary_y):
         """Updates the position according to velocity and boundaries."""
         if self.dx > 0 and not self.kneading:
-            if self.x < settings.screen_width - self.width:
+            if self.x < boundary_x - self.width:
                 self.x += self.dx
             else:
-                self.x = settings.screen_width - self.width
+                self.x = boundary_x - self.width
         elif self.dx < 0 and not self.kneading:
             if self.x > 0:
                 self.x += self.dx
@@ -134,7 +134,7 @@ class Cat(Tangible):
                 self.y = self.ground_height
                 self.dy = 0
         elif self.dy < 0:
-            if self.y > 0:
+            if self.y > -boundary_y:
                 self.y += self.dy
                 self.dy += 1
             else:

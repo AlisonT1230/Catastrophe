@@ -17,20 +17,14 @@ clock = pygame.time.Clock()
 
 default_background_col = (255, 255, 255)
 black = (0, 0, 0)
+boundary_x = 3000
+boundary_y = 1000
 
 player = Cat(100, 100, 'black')
 hud = HUD()
-blankets = [Blanket(300, 575), Blanket(200, 400), Blanket(750, 575)]
 ground_manager = GroundManager()
-#ground_manager.ground_blocks = [Ground(0, 700, 'wood_planks'), Ground(100, 700, 'wood_planks'), Ground(200, 700, 'wood_planks'), Ground(300, 700, 'stone')]
 
-camera_offset = (0, 0)  #   offset of bottom left corner of map
-map_0_txt = open("../maps/map_0.txt", "r")
-for line in map_0_txt:
-    pars = line.split()
-    ground_manager.ground_blocks.append(Ground(int(pars[1]), int(pars[2]), pars[0]))
-
-map_0_txt.close()
+camera_offset = ((settings.screen_width - player.width)/2 , (settings.screen_height - player.height)/2)  #   offset of bottom left corner of map
 
 #   Initalize sounds
 pygame.mixer.quit()
@@ -85,27 +79,71 @@ def game_loop():
 
 
 def update(count):
-    player.update(count)
-    player.update_blanket_val(blankets)
+    player.update(count, boundary_x, boundary_y)
+    camera_offset = (450, 350)
+    player.update_blanket_val(ground_manager.blankets)
     player.update_ground_val(ground_manager.ground_blocks)
     hud.update(player.health, player.knead_power)
 
 
+def within_screen(x, y):
+    return x < settings.screen_width + 100 and x > -100 and y > -100 and y < settings.screen_height + 100
+
+
 def draw():
-    display.blit(player.img, (player.x - camera_offset[0], player.y - camera_offset[1]))
-
-    for g in ground_manager.ground_blocks:
-        display.blit(g.wood_planks, (g.x - camera_offset[0], g.y - camera_offset[1]))
-
-    for b in blankets:
-        display.blit(b.green_img, (b.x, b.y))
-
+    display.blit(player.img, (camera_offset[0], camera_offset[1]))
+    draw_ground_blocks()
+    draw_blankets()
     display.blit(hud.health_txt, (25, 25))
     display.blit(hud.knead_txt, (25, 45))
     pygame.draw.rect(display, HUD_COLOUR, hud.health_rect)
     pygame.draw.rect(display, HUD_COLOUR, hud.knead_rect)
 
+
+def draw_ground_blocks():
+    x_blit_pos = 0
+    y_blit_pos = 0
+    for g in ground_manager.ground_blocks:
+        x_blit_pos = g.x - player.x + camera_offset[0]
+        y_blit_pos = g.y - player.y + camera_offset[1]
+        if within_screen(x_blit_pos, y_blit_pos):
+            display.blit(g.wood_planks, (x_blit_pos, y_blit_pos))
+
+
+def draw_blankets():
+    x_blit_pos = 0
+    y_blit_pos = 0
+    for b in ground_manager.blankets:
+        x_blit_pos = b.x - player.x + camera_offset[0]
+        y_blit_pos = b.y - player.y + camera_offset[1]
+        if within_screen(x_blit_pos, y_blit_pos):
+            display.blit(b.green_img, (x_blit_pos, y_blit_pos))
+
+
+def load_maps():
+    map_0_txt = open("../maps/map_0.txt", "r")
+    ground_done = False
+    for line in map_0_txt:
+        pars = line.split()
+        len_pars = len(pars)
+        if len_pars == 1:
+            if pars[0] == "--":
+                ground_done = True
+                continue
+        elif len_pars == 3 and not ground_done:
+            ground_manager.ground_blocks.append(Ground(int(pars[1]), int(pars[2]), pars[0]))
+        elif len_pars == 2:
+            ground_manager.blankets.append(Blanket(int(pars[0]), int(pars[1])))
+        elif len_pars == 5:
+            ground_manager.build_group(int(pars[1]), int(pars[2]), int(pars[3]), int(pars[4]), pars[0])
+        else:
+            print "Only takes 1, 2, 3, 5 args.\nGiven " + len_pars
+
+    map_0_txt.close()
+
+
 if __name__ == '__main__':
+    load_maps()
     game_loop()
 
     pygame.quit()
