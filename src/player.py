@@ -14,8 +14,8 @@ class Player(Cat):
         self.kneading = False
         self.on_blanket = False
         self.grounded = False
-    
-    
+
+
     def update(self, count, boundary_x, boundary_y):
         self.update_position(boundary_x, boundary_y)
         self.update_img(count)

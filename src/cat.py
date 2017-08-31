@@ -13,39 +13,47 @@ class Cat(Tangible):
         self.dx, self.dy = 0, 0
         self.kneading = False
         self.ground_height = settings.screen_height - self.height
+        self.grounded = False
 
-        #   Load all images
+        if col is 'black':
+            self.i1 = pygame.image.load(os.path.join("../textures/cats/black_cat_i1.bmp"))
+            self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
+            self.i1.convert()
 
-        self.i1 = pygame.image.load(os.path.join("../textures/cats/black_cat_i1.bmp"))
-        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
-        self.i1.convert()
+            self.i2 = pygame.image.load(os.path.join("../textures/cats/black_cat_i2.bmp"))
+            self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
+            self.i2.convert()
 
-        self.i2 = pygame.image.load(os.path.join("../textures/cats/black_cat_i2.bmp"))
-        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
-        self.i2.convert()
+            self.w1 = pygame.image.load(os.path.join("../textures/cats/black_cat_w1.bmp"))
+            self.w1 = pygame.transform.scale(self.w1, (self.width, self.height))
+            self.w1.convert()
 
-        self.w1 = pygame.image.load(os.path.join("../textures/cats/black_cat_w1.bmp"))
-        self.w1 = pygame.transform.scale(self.w1, (self.width, self.height))
-        self.w1.convert()
+            self.w2 = pygame.image.load(os.path.join("../textures/cats/black_cat_w2.bmp"))
+            self.w2 = pygame.transform.scale(self.w2, (self.width, self.height))
+            self.w2.convert()
 
-        self.w2 = pygame.image.load(os.path.join("../textures/cats/black_cat_w2.bmp"))
-        self.w2 = pygame.transform.scale(self.w2, (self.width, self.height))
-        self.w2.convert()
+            self.k1 = pygame.image.load(os.path.join("../textures/cats/black_cat_k1.bmp"))
+            self.k1 = pygame.transform.scale(self.k1, (self.width, self.height))
+            self.k1.convert()
 
-        self.k1 = pygame.image.load(os.path.join("../textures/cats/black_cat_k1.bmp"))
-        self.k1 = pygame.transform.scale(self.k1, (self.width, self.height))
-        self.k1.convert()
-
-        self.k2 = pygame.image.load(os.path.join("../textures/cats/black_cat_k2.bmp"))
-        self.k2 = pygame.transform.scale(self.k2, (self.width, self.height))
-        self.k2.convert()
+            self.k2 = pygame.image.load(os.path.join("../textures/cats/black_cat_k2.bmp"))
+            self.k2 = pygame.transform.scale(self.k2, (self.width, self.height))
+            self.k2.convert()
+        elif col is 'purple':
+            self.__load_ifloo()
+        elif col is 'beige':
+            self.width = 76
+            self.height = 72
+            self.__load_wendo()
+        elif col is 'red':
+            self.__load_nosila()
 
         self.img = self.i1       #   default image
-        
+
 
     def update(self, count, boundary_x, boundary_y):
-        self.__update_position(boundary_x, boundary_y)
-        self.__update_img(count)
+        self.update_position(boundary_x, boundary_y)
+        self.update_img(count)
 
 
     def update_position(self, boundary_x, boundary_y):
@@ -132,3 +140,33 @@ class Cat(Tangible):
                 self.img = self.w1
             else:
                 self.img = self.w2
+
+
+    def __load_ifloo(self):
+        self.i1 = pygame.image.load(os.path.join("../textures/cats/purple_cat_i1.bmp"))
+        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
+        self.i1.convert()
+
+        self.i2 = pygame.image.load(os.path.join("../textures/cats/purple_cat_i2.bmp"))
+        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
+        self.i2.convert()
+
+
+    def __load_wendo(self):
+        self.i1 = pygame.image.load(os.path.join("../textures/cats/beige_cat_i1.bmp"))
+        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
+        self.i1.convert()
+
+        self.i2 = pygame.image.load(os.path.join("../textures/cats/beige_cat_i2.bmp"))
+        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
+        self.i2.convert()
+
+    
+    def __load_nosila(self):
+        self.i1 = pygame.image.load(os.path.join("../textures/cats/red_cat_i1.bmp"))
+        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
+        self.i1.convert()
+
+        self.i2 = pygame.image.load(os.path.join("../textures/cats/red_cat_i2.bmp"))
+        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
+        self.i2.convert()
