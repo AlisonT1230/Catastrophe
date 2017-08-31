@@ -2,7 +2,7 @@ colour: black
 name: Bean
 description: timid, fluffy, agile
 colour: purple
-name: Iflah the Great
+name: Ifloo the Great
 description: the ruler of the Space Forest Kingdom (main export is books that grow on their trees)
 colour: orange
 name: Tangerine
