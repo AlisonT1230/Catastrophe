@@ -1,8 +1,8 @@
 import pygame
 import os
-from tangible import Tangible
+from cat import Cat
 
-class NPC(Tangible):
+class NPC(Cat):
 
     def __init__(self, x, y, name):
         super(NPC, self).__init__(x, y, 100, 100)

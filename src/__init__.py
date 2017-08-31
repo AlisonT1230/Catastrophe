@@ -3,6 +3,7 @@ from pygame.locals import FULLSCREEN
 import settings
 import os
 from cat import Cat
+from player import Player
 from blanket import Blanket
 from ground import Ground
 from ground_manager import GroundManager
@@ -20,7 +21,7 @@ black = (0, 0, 0)
 boundary_x = 3000
 boundary_y = 1000
 
-player = Cat(100, 100, 'black')
+player = Player(100, 100)
 hud = HUD()
 ground_manager = GroundManager()
 

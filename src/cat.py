@@ -4,9 +4,6 @@ import os
 
 from tangible import Tangible
 
-MAX_KNEAD = 100
-MAX_HEALTH = 100
-MAX_LIVES = 5
 TERMINAL_VELOCITY = 25
 
 class Cat(Tangible):
@@ -14,12 +11,7 @@ class Cat(Tangible):
     def __init__(self, x, y, col):
         super(Cat, self).__init__(x, y, 100, 100)
         self.dx, self.dy = 0, 0
-        self.health = 100
-        self.lives = 5
-        self.knead_power = 0
         self.kneading = False
-        self.on_blanket = False
-        self.grounded = False
         self.ground_height = settings.screen_height - self.height
 
         #   Load all images
@@ -54,67 +46,9 @@ class Cat(Tangible):
     def update(self, count, boundary_x, boundary_y):
         self.__update_position(boundary_x, boundary_y)
         self.__update_img(count)
-        self.__update_knead_val()
 
 
-    def move_left(self):
-        self.dx = -10
-
-
-    def move_right(self):
-        self.dx = 10
-
-
-    def stop(self):
-        self.dx = 0
-
-
-    def jump(self):
-        if self.y == self.ground_height and not self.kneading:
-            self.dy = -20
-            self.jump_sound.play()
-
-
-    def knead(self):
-        if self.knead_power < MAX_KNEAD and self.y == self.ground_height and self.on_blanket:
-            self.kneading = True
-            self.purr_sound.play(-1)
-        
-
-    def stop_knead(self):
-        self.kneading = False
-        self.purr_sound.fadeout(1000)
-
-
-    def add_health(self, amt):
-        if self.health + amt < MAX_HEALTH:
-            self.health += amt
-        else:
-            self.health = MAX_HEALTH
-
-
-    def drop_health(self, amt):
-        if self.health - amt > 0:
-            self.health -= amt
-        else:
-            self.health = 0
-            self.drop_life()
-
-    
-    def add_life(self):
-        if self.lives < MAX_LIVES:
-            self.lives += 1
-
-
-    def drop_life(self):
-        if self.lives > 0:
-            self.lives -= 1
-        else:
-            pass
-            #   GAME OVER
-
-
-    def __update_position(self, boundary_x, boundary_y):
+    def update_position(self, boundary_x, boundary_y):
         """Updates the position according to velocity and boundaries."""
         if self.dx > 0 and not self.kneading:
             if self.x < boundary_x - self.width:
@@ -178,15 +112,7 @@ class Cat(Tangible):
                     self.grounded = False
 
 
-    def __update_knead_val(self):
-        if self.kneading:
-            if self.knead_power < MAX_KNEAD:
-                self.knead_power += 0.5
-            else:
-                self.stop_knead()
-
-
-    def __update_img(self, count):
+    def update_img(self, count):
         """
         Updates the image to the correct animation 
         frame according to the count.
