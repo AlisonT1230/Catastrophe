@@ -3,6 +3,8 @@ from pygame.locals import FULLSCREEN
 import settings
 import os
 from cat import Cat
+from player import Player
+from npc import NPC
 from blanket import Blanket
 from ground import Ground
 from ground_manager import GroundManager
@@ -20,7 +22,10 @@ black = (0, 0, 0)
 boundary_x = 3000
 boundary_y = 1000
 
-player = Cat(100, 100, 'black')
+player = Player(100, 100)
+ifloo = NPC(850, 100, 'purple')
+wendo = NPC(980, 50, 'beige')
+nosila = NPC(1050, 50, 'red')
 hud = HUD()
 ground_manager = GroundManager()
 
@@ -84,6 +89,15 @@ def update(count):
     player.update_blanket_val(ground_manager.blankets)
     player.update_ground_val(ground_manager.ground_blocks)
     hud.update(player.health, player.knead_power)
+    ifloo.update(count, boundary_x, boundary_y)
+    ifloo.update_blanket_val(ground_manager.blankets)
+    ifloo.update_ground_val(ground_manager.ground_blocks)
+    wendo.update(count, boundary_x, boundary_y)
+    wendo.update_blanket_val(ground_manager.blankets)
+    wendo.update_ground_val(ground_manager.ground_blocks)
+    nosila.update(count, boundary_x, boundary_y)
+    nosila.update_blanket_val(ground_manager.blankets)
+    nosila.update_ground_val(ground_manager.ground_blocks)
 
 
 def within_screen(x, y):
@@ -92,6 +106,9 @@ def within_screen(x, y):
 
 def draw():
     display.blit(player.img, (camera_offset[0], camera_offset[1]))
+    display.blit(ifloo.img, (ifloo.x - player.x + camera_offset[0], ifloo.y - player.y + camera_offset[1]))
+    display.blit(wendo.img, (wendo.x - player.x + camera_offset[0], wendo.y - player.y + camera_offset[1]))
+    display.blit(nosila.img, (nosila.x - player.x + camera_offset[0], nosila.y - player.y + camera_offset[1]))
     draw_ground_blocks()
     draw_blankets()
     display.blit(hud.health_txt, (25, 25))

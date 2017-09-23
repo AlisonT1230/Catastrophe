@@ -4,9 +4,6 @@ import os
 
 from tangible import Tangible
 
-MAX_KNEAD = 100
-MAX_HEALTH = 100
-MAX_LIVES = 5
 TERMINAL_VELOCITY = 25
 
 class Cat(Tangible):
@@ -14,107 +11,30 @@ class Cat(Tangible):
     def __init__(self, x, y, col):
         super(Cat, self).__init__(x, y, 100, 100)
         self.dx, self.dy = 0, 0
-        self.health = 100
-        self.lives = 5
-        self.knead_power = 0
         self.kneading = False
-        self.on_blanket = False
-        self.grounded = False
         self.ground_height = settings.screen_height - self.height
+        self.grounded = False
 
-        #   Load all images
-
-        self.i1 = pygame.image.load(os.path.join("../textures/cats/black_cat_i1.bmp"))
-        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
-        self.i1.convert()
-
-        self.i2 = pygame.image.load(os.path.join("../textures/cats/black_cat_i2.bmp"))
-        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
-        self.i2.convert()
-
-        self.w1 = pygame.image.load(os.path.join("../textures/cats/black_cat_w1.bmp"))
-        self.w1 = pygame.transform.scale(self.w1, (self.width, self.height))
-        self.w1.convert()
-
-        self.w2 = pygame.image.load(os.path.join("../textures/cats/black_cat_w2.bmp"))
-        self.w2 = pygame.transform.scale(self.w2, (self.width, self.height))
-        self.w2.convert()
-
-        self.k1 = pygame.image.load(os.path.join("../textures/cats/black_cat_k1.bmp"))
-        self.k1 = pygame.transform.scale(self.k1, (self.width, self.height))
-        self.k1.convert()
-
-        self.k2 = pygame.image.load(os.path.join("../textures/cats/black_cat_k2.bmp"))
-        self.k2 = pygame.transform.scale(self.k2, (self.width, self.height))
-        self.k2.convert()
+        if col is 'black':
+            self.__load_player()
+        elif col is 'purple':
+            self.__load_ifloo()
+        elif col is 'beige':
+            self.width = 76
+            self.height = 72
+            self.__load_wendo()
+        elif col is 'red':
+            self.__load_nosila()
 
         self.img = self.i1       #   default image
-        
+
 
     def update(self, count, boundary_x, boundary_y):
-        self.__update_position(boundary_x, boundary_y)
-        self.__update_img(count)
-        self.__update_knead_val()
+        self.update_position(boundary_x, boundary_y)
+        self.update_img(count)
 
 
-    def move_left(self):
-        self.dx = -10
-
-
-    def move_right(self):
-        self.dx = 10
-
-
-    def stop(self):
-        self.dx = 0
-
-
-    def jump(self):
-        if self.y == self.ground_height and not self.kneading:
-            self.dy = -20
-            self.jump_sound.play()
-
-
-    def knead(self):
-        if self.knead_power < MAX_KNEAD and self.y == self.ground_height and self.on_blanket:
-            self.kneading = True
-            self.purr_sound.play(-1)
-        
-
-    def stop_knead(self):
-        self.kneading = False
-        self.purr_sound.fadeout(1000)
-
-
-    def add_health(self, amt):
-        if self.health + amt < MAX_HEALTH:
-            self.health += amt
-        else:
-            self.health = MAX_HEALTH
-
-
-    def drop_health(self, amt):
-        if self.health - amt > 0:
-            self.health -= amt
-        else:
-            self.health = 0
-            self.drop_life()
-
-    
-    def add_life(self):
-        if self.lives < MAX_LIVES:
-            self.lives += 1
-
-
-    def drop_life(self):
-        if self.lives > 0:
-            self.lives -= 1
-        else:
-            pass
-            #   GAME OVER
-
-
-    def __update_position(self, boundary_x, boundary_y):
+    def update_position(self, boundary_x, boundary_y):
         """Updates the position according to velocity and boundaries."""
         if self.dx > 0 and not self.kneading:
             if self.x < boundary_x - self.width:
@@ -178,15 +98,7 @@ class Cat(Tangible):
                     self.grounded = False
 
 
-    def __update_knead_val(self):
-        if self.kneading:
-            if self.knead_power < MAX_KNEAD:
-                self.knead_power += 0.5
-            else:
-                self.stop_knead()
-
-
-    def __update_img(self, count):
+    def update_img(self, count):
         """
         Updates the image to the correct animation 
         frame according to the count.
@@ -206,3 +118,59 @@ class Cat(Tangible):
                 self.img = self.w1
             else:
                 self.img = self.w2
+
+
+    def __load_player(self):
+        self.i1 = pygame.image.load(os.path.join("../textures/cats/black_cat_i1.bmp"))
+        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
+        self.i1.convert()
+
+        self.i2 = pygame.image.load(os.path.join("../textures/cats/black_cat_i2.bmp"))
+        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
+        self.i2.convert()
+
+        self.w1 = pygame.image.load(os.path.join("../textures/cats/black_cat_w1.bmp"))
+        self.w1 = pygame.transform.scale(self.w1, (self.width, self.height))
+        self.w1.convert()
+
+        self.w2 = pygame.image.load(os.path.join("../textures/cats/black_cat_w2.bmp"))
+        self.w2 = pygame.transform.scale(self.w2, (self.width, self.height))
+        self.w2.convert()
+
+        self.k1 = pygame.image.load(os.path.join("../textures/cats/black_cat_k1.bmp"))
+        self.k1 = pygame.transform.scale(self.k1, (self.width, self.height))
+        self.k1.convert()
+
+        self.k2 = pygame.image.load(os.path.join("../textures/cats/black_cat_k2.bmp"))
+        self.k2 = pygame.transform.scale(self.k2, (self.width, self.height))
+        self.k2.convert()
+
+
+    def __load_ifloo(self):
+        self.i1 = pygame.image.load(os.path.join("../textures/cats/purple_cat_i1.bmp"))
+        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
+        self.i1.convert()
+
+        self.i2 = pygame.image.load(os.path.join("../textures/cats/purple_cat_i2.bmp"))
+        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
+        self.i2.convert()
+
+
+    def __load_wendo(self):
+        self.i1 = pygame.image.load(os.path.join("../textures/cats/beige_cat_i1.bmp"))
+        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
+        self.i1.convert()
+
+        self.i2 = pygame.image.load(os.path.join("../textures/cats/beige_cat_i2.bmp"))
+        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
+        self.i2.convert()
+
+    
+    def __load_nosila(self):
+        self.i1 = pygame.image.load(os.path.join("../textures/cats/red_cat_i1.bmp"))
+        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
+        self.i1.convert()
+
+        self.i2 = pygame.image.load(os.path.join("../textures/cats/red_cat_i2.bmp"))
+        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
+        self.i2.convert()
