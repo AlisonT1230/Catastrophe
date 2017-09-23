@@ -36,8 +36,6 @@ pygame.mixer.quit()
 pygame.mixer.init(44100, -16, 2, 512)
 #pygame.mixer.music.load(os.path.join("../sounds/music/Catastrophe.wav"))
 pygame.mixer.music.load(os.path.join("../sounds/music/Jazzy Cat.wav"))
-# --  https://freesound.org/people/soundmary/  -- remove
-#player.purr_sound = pygame.mixer.Sound(os.path.join("../sounds/sound_effects/purr.wav"))
 player.purr_sound = pygame.mixer.Sound(os.path.join("../sounds/sound_effects/purr_bean.wav"))
 #   https://freesound.org/people/Npeo/
 player.meow_sound = pygame.mixer.Sound(os.path.join("../sounds/sound_effects/meow.wav"))
