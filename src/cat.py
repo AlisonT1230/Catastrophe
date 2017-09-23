@@ -16,29 +16,7 @@ class Cat(Tangible):
         self.grounded = False
 
         if col is 'black':
-            self.i1 = pygame.image.load(os.path.join("../textures/cats/black_cat_i1.bmp"))
-            self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
-            self.i1.convert()
-
-            self.i2 = pygame.image.load(os.path.join("../textures/cats/black_cat_i2.bmp"))
-            self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
-            self.i2.convert()
-
-            self.w1 = pygame.image.load(os.path.join("../textures/cats/black_cat_w1.bmp"))
-            self.w1 = pygame.transform.scale(self.w1, (self.width, self.height))
-            self.w1.convert()
-
-            self.w2 = pygame.image.load(os.path.join("../textures/cats/black_cat_w2.bmp"))
-            self.w2 = pygame.transform.scale(self.w2, (self.width, self.height))
-            self.w2.convert()
-
-            self.k1 = pygame.image.load(os.path.join("../textures/cats/black_cat_k1.bmp"))
-            self.k1 = pygame.transform.scale(self.k1, (self.width, self.height))
-            self.k1.convert()
-
-            self.k2 = pygame.image.load(os.path.join("../textures/cats/black_cat_k2.bmp"))
-            self.k2 = pygame.transform.scale(self.k2, (self.width, self.height))
-            self.k2.convert()
+            self.__load_player()
         elif col is 'purple':
             self.__load_ifloo()
         elif col is 'beige':
@@ -140,6 +118,32 @@ class Cat(Tangible):
                 self.img = self.w1
             else:
                 self.img = self.w2
+
+
+    def __load_player(self):
+        self.i1 = pygame.image.load(os.path.join("../textures/cats/black_cat_i1.bmp"))
+        self.i1 = pygame.transform.scale(self.i1, (self.width, self.height))
+        self.i1.convert()
+
+        self.i2 = pygame.image.load(os.path.join("../textures/cats/black_cat_i2.bmp"))
+        self.i2 = pygame.transform.scale(self.i2, (self.width, self.height))
+        self.i2.convert()
+
+        self.w1 = pygame.image.load(os.path.join("../textures/cats/black_cat_w1.bmp"))
+        self.w1 = pygame.transform.scale(self.w1, (self.width, self.height))
+        self.w1.convert()
+
+        self.w2 = pygame.image.load(os.path.join("../textures/cats/black_cat_w2.bmp"))
+        self.w2 = pygame.transform.scale(self.w2, (self.width, self.height))
+        self.w2.convert()
+
+        self.k1 = pygame.image.load(os.path.join("../textures/cats/black_cat_k1.bmp"))
+        self.k1 = pygame.transform.scale(self.k1, (self.width, self.height))
+        self.k1.convert()
+
+        self.k2 = pygame.image.load(os.path.join("../textures/cats/black_cat_k2.bmp"))
+        self.k2 = pygame.transform.scale(self.k2, (self.width, self.height))
+        self.k2.convert()
 
 
     def __load_ifloo(self):
